@@ -31,7 +31,7 @@ ResourceHandler.prototype.getActorDetailsByLogin = function(request, response) {
     const login = request.params.login;
     EventCtrl.getActorAndHisRepo(login)
         .then(function(result) {
-            Helper.sendSuccess(response, result, "repo");
+            Helper.sendSuccess(response, result, "actorDetails");
         })
         .catch(function(err) {
             Helper.sendError(response, err);
@@ -58,8 +58,8 @@ ResourceHandler.prototype.getRepoWithHighestActions = function(request, response
 //Return list of all repositories with their top contributor (actor with most events).
 
 ResourceHandler.prototype.getRepoWithAllTopActors = function(request, response) {
-    const offset = request.query.offset || 0;
-    const limit = request.query.limit || 20;
+    const offset = parseInt(request.query.offset) || 0;
+    const limit = parseInt(request.query.limit) || 20;
 
     EventCtrl.getAllRepoWithToContributor(offset, limit)
         .then(function(result) {

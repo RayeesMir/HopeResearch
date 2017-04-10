@@ -74,7 +74,7 @@ Events.prototype.getActorAndHisRepo = function(login) {
                             from: "repos",
                             localField: "repoId",
                             foreignField: "_id",
-                            as: "Repostory"
+                            as: "Repository"
                         }
                     }, {
                         $lookup: {
@@ -86,30 +86,38 @@ Events.prototype.getActorAndHisRepo = function(login) {
                     }, {
                         $group: {
                             _id: {
-                                "Repo": "$Repostory",
-                                "Actor": "$Actor"
+                                "Actor": "$actor"
+                            },
+                            Repository: {
+                                $push: "$Repository"
+                            },
+                            Actor: {
+                                $push: "$Actor"
                             }
 
                         }
                     }, {
                         $project: {
-                            "_id.Repo": 1,
+                            "Repository": 1,
                             "Actor": {
-                                $slice: ["$_id.Actor", 1]
-                            }
+                                $slice: ["$Actor", 1]
+                            },
+                            _id: 0
                         }
                     }]
                 ).exec()
             })
             .then(function(actorRepos) {
-                const actorDetails = {
-                    actorId: actorRepos[0].Actor[0].actorId,
-                    login: actorRepos[0].Actor[0].login,
-                    gravatar_id: actorRepos[0].Actor[0].gravatar_id,
-                    avatar_url: actorRepos[0].Actor[0].avatar_url,
-                    repositories: actorRepos[0]._id.Repo,
-                };
-                resolve(actorDetails);
+                let repos = _.flatten(actorRepos[0].Repository)
+                let actor = _.flatten(actorRepos[0].Actor)
+                let uniqRepo = _.uniqBy(repos, function(o) {
+                    return o.repoId;
+                });
+                const result = {
+                    actor: actor[0],
+                    repositories: uniqRepo
+                }
+                resolve(result);
             })
             .catch(function(err) {
                 reject(err);
@@ -207,12 +215,12 @@ Events.prototype.getAllTopActorsForRepo = function() {
 
 Events.prototype.getAllRepoWithToContributor = function(skip, limit) {
     var self = this;
+
     return new Promise(function(resolve, reject) {
         console.log("test")
+        console.log(skip, limit)
         Model.aggregate(
-                [
-
-                    {
+                [{
                         $lookup: {
                             from: "repos",
                             localField: "repoId",
@@ -287,6 +295,7 @@ Events.prototype.getAllRepoWithToContributor = function(skip, limit) {
                 resolve(result);
             })
             .catch(function(err) {
+                console.log(err);
                 reject(err);
             })
     });
