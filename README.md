@@ -19,7 +19,7 @@ Hope Research Code Challange
 * Run "npm install" 
 * Run "npm rum import" (To import Data from the Datasource Provided and save that in database)
 * Run "npm start" and server will start on port 3000
-* You can changes database name and data source in config file.
+* You can change database name and data source in config file.
 
 
       
