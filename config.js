@@ -2,7 +2,7 @@ module.exports={
 	dataSource:'http://data.githubarchive.org/2015-01-01-15.json.gz',	
 	mongodb:{
 		host:"127.0.0.1",
-		db:"gitEvents",
+		db:"newgitEvents",
 		protocol:"mongodb://"
 	},
 	getDbString:function() {

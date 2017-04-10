@@ -29,7 +29,7 @@ ResourceHandler.prototype.getFilteredRepoByEventType = function(request, respons
 ResourceHandler.prototype.getActorDetailsByLogin = function(request, response) {
 
     const login = request.params.login;
-    EventCtrl.getListOfAllContributedRepo(login)
+    EventCtrl.getActorAndHisRepo(login)
         .then(function(result) {
             Helper.sendSuccess(response, result, "repo");
         })
@@ -44,7 +44,7 @@ ResourceHandler.prototype.getActorDetailsByLogin = function(request, response) {
 ResourceHandler.prototype.getRepoWithHighestActions = function(request, response) {
 
     const login = request.params.login;
-    EventCtrl.getHighestActionByUser(login)
+    EventCtrl.getHighestEventsByUser(login)
         .then(function(result) {
             Helper.sendSuccess(response, result, "repo");
         })
@@ -58,12 +58,14 @@ ResourceHandler.prototype.getRepoWithHighestActions = function(request, response
 //Return list of all repositories with their top contributor (actor with most events).
 
 ResourceHandler.prototype.getRepoWithAllTopActors = function(request, response) {
-    EventCtrl.getAllTopActorsForRepo()
+    const offset = request.query.offset || 0;
+    const limit = request.query.limit || 20;
+
+    EventCtrl.getAllRepoWithToContributor(offset, limit)
         .then(function(result) {
             Helper.sendSuccess(response, result, "repo");
         })
         .catch(function(err) {
-
             Helper.sendError(response, err);
         });
 
@@ -79,7 +81,7 @@ ResourceHandler.prototype.deleteHistoryByActors = function(request, response) {
         .then(function(result) {
             Helper.sendSuccess(response, result, "result");
         })
-        .catch(function(err) {         
+        .catch(function(err) {
             Helper.sendError(response, err);
         });
 
