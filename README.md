@@ -16,7 +16,7 @@ Hope Research Code Challange
 * Clone Repo.
 * Run "npm install" 
 * Run "npm rum import" (To import Data from the Datasource Provided and save that in database)
-* Run "npm start" and you are ready to go server will start on port 3000
+* Run "npm start" and server will start on port 3000
 
 
       
