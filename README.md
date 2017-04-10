@@ -1,21 +1,15 @@
-# HopeResearch
+# HopeResearch GitHub DataSet Challange
 Hope Research Code Challange
-
-# San Francisco Movies Search
-
-### Live Demo 
-   http://139.59.20.72:3000/ (May Not Be Available After Sometime)
    
 ### What is this repository for? ###
 
-* This Project Lets You Search Movies that had been filmed in San Francisco and draws Markers on the location with autocomplete feature.(there may not be marker for some of movies as i didn't got geolocation from google's geoCode API; because of ambigious location names in data source.May be in future it can be resolved)
-* Version 1.0   
+* This Project dowloads data from github server, uncompresses the data and exposes the endpoints mentioned below.
+
 
 ### Requirements ###
 
  * Node
  * MongoDB
- * Elastic Search (optional elastic code is commented)
  
 ### How do I get set up? ###
 
@@ -27,16 +21,25 @@ Hope Research Code Challange
 
       
 ### EndPoints
-  *   /events/:repo/:event
-      * GET Method
-      * Paramsyou need to Pass RepositoryId and eventType in params.This endpoint Return records filtered by the repository id and event type 
+  *   /events/{repoid}/{event}
+      * Method GET
+      * Params you need to Passed are RepositoryId and eventType.
+      * Return records filtered by the repository id and event type 
   *   /repo/all
-      This endpoint Return list of all repositories with their top contributor (actor with most events).
-  *   /actor/:login
-      you need to Pass login as parameter. Return actor details and list of contributed repositories by actor login
-  *   /repo/highest/:login
-  *   /events/:login
-   
+      * Method GET
+      * Return list of all repositories with their top contributor (actor with most events).
+  *   /actor/{login}
+      * Method GET 
+      * Params you need to Passed is login name.
+      * Return actor details and list of contributed repositories by actor login
+  *   /repo/highest/{login}
+      * Method GET 
+      * Params you need to Passed is login name.
+      * Return repository with the highest number of events from an actor(by login).
+  *   /events/{login}
+      * Method DELETE 
+      * Params you need to Passed is login name.
+      * Deletes History of actors events (by login).   
 
 
 ### Who do I talk to? ###
