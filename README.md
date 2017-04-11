@@ -6,6 +6,8 @@ Hope Research Code Challange
 
 * This Project dowloads data from github server, uncompresses the data and exposes the endpoints mentioned below.
 
+### ****** There Is some unnecessary and unused code in repo, need to be cleaned up ******
+
 
 ### Requirements ###
 
@@ -28,8 +30,9 @@ Hope Research Code Challange
       * Method GET
       * Params you need to Pass are RepositoryId and eventType.
       * Return records filtered by the repository id and event type 
-  *   /repo/all
+  *   /repo/all?offset=vaule&limit=value
       * Method GET
+      * Pass offset and limit in query (offset and limit are optional, by default they are set in backend) 
       * Return list of all repositories with their top contributor (actor with most events).
   *   /actor/{login}
       * Method GET 
