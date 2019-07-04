@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "import": "node ./import"
+    "import": "node ./import",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "async": "^2.3.0",
@@ -14,6 +16,8 @@
     "mongoose": "^4.9.3",
     "morgan": "~1.7.0",
     "request": "^2.81.0",
-    "lodash": "latest"
-  }
+    "lodash": "latest",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
